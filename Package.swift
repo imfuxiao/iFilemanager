@@ -27,11 +27,7 @@ let package = Package(
         .product(name: "ZIPFoundation", package: "ZIPFoundation"),
       ],
       resources: [
-        .copy("Resources/css"),
-        .copy("Resources/fonts"),
-        .copy("Resources/img"),
-        .copy("Resources/js"),
-        .copy("Resources/index.leaf"),
+        .copy("Resources"),
       ]),
     .testTarget(
       name: "iFilemanagerTests",
