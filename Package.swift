@@ -16,7 +16,7 @@ let package = Package(
   dependencies: [
     .package(url: "https://github.com/vapor/vapor.git", from: "4.0.0"),
     .package(url: "https://github.com/vapor/leaf.git", from: "4.2.4"),
-    .package(url: "https://github.com/weichsel/ZIPFoundation.git", from: "0.9.16"),
+    .package(url: "https://github.com/weichsel/ZIPFoundation.git", from: "0.9.16")
   ],
   targets: [
     .target(
@@ -24,14 +24,19 @@ let package = Package(
       dependencies: [
         .product(name: "Vapor", package: "vapor"),
         .product(name: "Leaf", package: "leaf"),
-        .product(name: "ZIPFoundation", package: "ZIPFoundation"),
+        .product(name: "ZIPFoundation", package: "ZIPFoundation")
       ],
       resources: [
-        .copy("Resources"),
+        .copy("Resources/css"),
+        .copy("Resources/fonts"),
+        .copy("Resources/img"),
+        .copy("Resources/img/icons"),
+        .copy("Resources/js"),
+        .process("Resources/index.leaf")
       ]),
     .testTarget(
       name: "iFilemanagerTests",
       dependencies: [
         "iFilemanager"
-      ]),
+      ])
   ])
