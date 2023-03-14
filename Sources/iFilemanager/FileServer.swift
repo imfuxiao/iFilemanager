@@ -43,7 +43,7 @@ public class FileServer {
   public func start() {
     // Task(priority: .background) {
     do {
-      try app.register(collection: FileWebRouteCollection(publicDirectory: self.publicDirectory))
+      try app.register(collection: FileWebRouteCollection(publicDirectory: publicDirectory))
       try app.server.start()
     } catch {
       fatalError(error.localizedDescription)
@@ -52,10 +52,6 @@ public class FileServer {
   }
 
   public func shutdown() {
-    do {
-      try app.server.shutdown()
-    } catch {
-      fatalError(error.localizedDescription)
-    }
+    app.server.shutdown()
   }
 }

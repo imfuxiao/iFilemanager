@@ -58,53 +58,6 @@ const router = new Router({
             requiresAuth: false,
           },
         },
-        // {
-        //   path: "/settings",
-        //   name: "Settings",
-        //   component: Settings,
-        //   redirect: {
-        //     path: "/settings/profile",
-        //   },
-        //   meta: {
-        //     requiresAuth: false,
-        //   },
-        //   children: [
-        //     {
-        //       path: "/settings/profile",
-        //       name: "ProfileSettings",
-        //       component: ProfileSettings,
-        //     },
-        //     {
-        //       path: "/settings/shares",
-        //       name: "Shares",
-        //       component: Shares,
-        //     },
-        //     {
-        //       path: "/settings/global",
-        //       name: "GlobalSettings",
-        //       component: GlobalSettings,
-        //       meta: {
-        //         requiresAdmin: true,
-        //       },
-        //     },
-        //     {
-        //       path: "/settings/users",
-        //       name: "Users",
-        //       component: Users,
-        //       meta: {
-        //         requiresAdmin: true,
-        //       },
-        //     },
-        //     {
-        //       path: "/settings/users/*",
-        //       name: "User",
-        //       component: User,
-        //       meta: {
-        //         requiresAdmin: true,
-        //       },
-        //     },
-        //   ],
-        // },
         {
           path: "/403",
           name: "Forbidden",

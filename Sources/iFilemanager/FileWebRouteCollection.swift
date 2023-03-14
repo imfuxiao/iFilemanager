@@ -21,6 +21,12 @@ struct FileWebRouteCollection: RouteCollection {
 
   func boot(routes: RoutesBuilder) throws {
     routes.get("", use: indexHandler)
+    routes.get("files", use: {
+      $0.redirect(to: "/")
+    })
+    routes.get("files", "**", use: {
+      $0.redirect(to: "/")
+    })
     routes.group("api") { api in
       // 容量信息
       api.get("usage", use: usageHandler)

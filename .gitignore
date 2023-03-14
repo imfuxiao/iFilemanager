@@ -10,7 +10,7 @@ DerivedData/
 
 # Front
 node_modules
-/dist
+Front/dist
 
 # local env files
 .env.local
