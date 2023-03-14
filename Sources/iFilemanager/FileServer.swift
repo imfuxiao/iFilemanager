@@ -44,7 +44,7 @@ public class FileServer {
     Task(priority: .background) {
       do {
         try app.register(collection: FileWebRouteCollection(publicDirectory: self.publicDirectory))
-        try app.start()
+        try app.server.start()
       } catch {
         fatalError(error.localizedDescription)
       }
@@ -52,8 +52,10 @@ public class FileServer {
   }
 
   public func shutdown() {
-    if !app.didShutdown {
-      app.shutdown()
+    do {
+      try app.server.onShutdown.wait()
+    } catch {
+      fatalError(error.localizedDescription)
     }
   }
 }
