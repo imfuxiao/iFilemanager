@@ -53,7 +53,7 @@ public class FileServer {
 
   public func shutdown() {
     do {
-      try app.server.onShutdown.wait()
+      try app.server.shutdown()
     } catch {
       fatalError(error.localizedDescription)
     }
