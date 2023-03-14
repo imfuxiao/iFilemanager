@@ -41,14 +41,14 @@ public class FileServer {
   }
 
   public func start() {
-    Task(priority: .background) {
-      do {
-        try app.register(collection: FileWebRouteCollection(publicDirectory: self.publicDirectory))
-        try app.server.start()
-      } catch {
-        fatalError(error.localizedDescription)
-      }
+    // Task(priority: .background) {
+    do {
+      try app.register(collection: FileWebRouteCollection(publicDirectory: self.publicDirectory))
+      try app.server.start()
+    } catch {
+      fatalError(error.localizedDescription)
     }
+    // }
   }
 
   public func shutdown() {
