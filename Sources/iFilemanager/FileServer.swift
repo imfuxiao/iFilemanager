@@ -41,17 +41,25 @@ public class FileServer {
   }
 
   public func start() {
-    // Task(priority: .background) {
-    do {
-      try app.register(collection: FileWebRouteCollection(publicDirectory: publicDirectory))
-      try app.server.start()
-    } catch {
-      fatalError(error.localizedDescription)
+    DispatchQueue.global(qos: .background).async { [weak self] in
+      guard let self = self else {
+        return
+      }
+      do {
+        try self.app.register(collection: FileWebRouteCollection(publicDirectory: self.publicDirectory))
+        try self.app.server.start()
+      } catch {
+        fatalError(error.localizedDescription)
+      }
     }
-    // }
   }
 
   public func shutdown() {
     app.server.shutdown()
+    do {
+      try app.server.onShutdown.wait()
+    } catch {
+      fatalError(error.localizedDescription)
+    }
   }
 }
