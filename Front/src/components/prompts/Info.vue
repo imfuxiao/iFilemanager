@@ -80,10 +80,10 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from "vuex";
-import filesize from "filesize";
-import moment from "moment";
+import { mapGetters, mapState } from "vuex";
+// import filesize from "filesize";
 import { files as api } from "@/api";
+import moment from "moment";
 
 export default {
   name: "info",
@@ -92,7 +92,7 @@ export default {
     ...mapGetters(["selectedCount", "isListing"]),
     humanSize: function () {
       if (this.selectedCount === 0 || !this.isListing) {
-        return filesize(this.req.size);
+        return this.req.size;
       }
 
       let sum = 0;
@@ -101,7 +101,7 @@ export default {
         sum += this.req.items[selected].size;
       }
 
-      return filesize(sum);
+      return sum;
     },
     humanTime: function () {
       if (this.selectedCount === 0) {
@@ -142,7 +142,7 @@ export default {
       try {
         const hash = await api.checksum(link, algo);
         // eslint-disable-next-line
-        event.target.innerHTML = hash
+        event.target.innerHTML = hash;
       } catch (e) {
         this.$showError(e);
       }

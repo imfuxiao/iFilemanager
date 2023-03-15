@@ -129,7 +129,10 @@ struct FileWebRouteCollection: RouteCollection {
     }
 
     if let data = req.body.data {
-      try Data(data.readableBytesView).write(to: fileURL)
+      req.fileio.writeFile(data, at: fileURL.path)
+        .whenFailure {
+          print("unresolve error: \($0.localizedDescription)")
+        }
     }
 
     return .OK
