@@ -5,6 +5,7 @@ import PackageDescription
 
 let package = Package(
   name: "iFilemanager",
+  defaultLocalization: "en",
   platforms: [
     .iOS(.v14)
   ],
@@ -27,12 +28,12 @@ let package = Package(
         .product(name: "ZIPFoundation", package: "ZIPFoundation")
       ],
       resources: [
+        .process("Resources/index.leaf"),
         .copy("Resources/css"),
         .copy("Resources/fonts"),
         .copy("Resources/img"),
         .copy("Resources/img/icons"),
         .copy("Resources/js"),
-        .process("Resources/index.leaf")
       ]),
     .testTarget(
       name: "iFilemanagerTests",
