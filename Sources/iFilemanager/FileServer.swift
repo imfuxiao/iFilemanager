@@ -41,10 +41,7 @@ public class FileServer {
   }
 
   public func start() {
-    DispatchQueue.global(qos: .background).async { [weak self] in
-      guard let self = self else {
-        return
-      }
+    Task(priority: .background) {
       do {
         try self.app.register(collection: FileWebRouteCollection(publicDirectory: self.publicDirectory))
         try self.app.server.start()
