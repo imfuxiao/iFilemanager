@@ -28,7 +28,7 @@ let package = Package(
         .product(name: "ZIPFoundation", package: "ZIPFoundation")
       ],
       resources: [
-        .process("Resources/index.leaf"),
+        .copy("Resources/index.leaf"),
         .copy("Resources/css"),
         .copy("Resources/fonts"),
         .copy("Resources/img"),
