@@ -5,6 +5,7 @@ public class FileServer {
   private var app: Application
   private let port: Int
   private let publicDirectory: URL
+  private var isRunning: Bool = false
 
   public init(port: Int, publicDirectory: URL) {
     self.port = port
@@ -25,11 +26,11 @@ public class FileServer {
 
     app.views.use(.leaf)
     app.leaf.cache.isEnabled = app.environment.isRelease
-    app.leaf.configuration.rootDirectory = Bundle.module.bundlePath
-
+    app.leaf.configuration.rootDirectory = Bundle.module.bundlePath.appending("/static")
+    
     app.routes.defaultMaxBodySize = "60MB"
 
-    let file = FileMiddleware(publicDirectory: Bundle.module.bundlePath)
+    let file = FileMiddleware(publicDirectory: Bundle.module.bundlePath.appending("/static"))
     app.middleware.use(file)
 
     let encoder = JSONEncoder()
@@ -45,18 +46,22 @@ public class FileServer {
       do {
         try self.app.register(collection: FileWebRouteCollection(publicDirectory: self.publicDirectory))
         try self.app.server.start()
+        self.isRunning = true
       } catch {
+        self.isRunning = false
         fatalError(error.localizedDescription)
       }
     }
   }
 
   public func shutdown() {
-    app.server.shutdown()
-    do {
-      try app.server.onShutdown.wait()
-    } catch {
-      fatalError(error.localizedDescription)
+    if isRunning {
+      app.server.shutdown()
+      do {
+        try app.server.onShutdown.wait()
+      } catch {
+        fatalError(error.localizedDescription)
+      }
     }
   }
 }

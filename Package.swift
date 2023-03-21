@@ -1,4 +1,4 @@
-// swift-tools-version: 5.7
+// swift-tools-version: 5.5
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -15,9 +15,10 @@ let package = Package(
       targets: ["iFilemanager"])
   ],
   dependencies: [
-    .package(url: "https://github.com/vapor/vapor.git", from: "4.0.0"),
-    .package(url: "https://github.com/vapor/leaf.git", from: "4.2.4"),
-    .package(url: "https://github.com/weichsel/ZIPFoundation.git", from: "0.9.16")
+    .package(url: "https://github.com/vapor/vapor.git", .exact("4.74.0")),
+    .package(url: "https://github.com/vapor/leaf.git", .exact("4.2.4")),
+    .package(url: "https://github.com/vapor/routing-kit.git", .exact("4.5.0")),
+    .package(url: "https://github.com/weichsel/ZIPFoundation.git", .exact("0.9.16"))
   ],
   targets: [
     .target(
@@ -27,13 +28,9 @@ let package = Package(
         .product(name: "Leaf", package: "leaf"),
         .product(name: "ZIPFoundation", package: "ZIPFoundation")
       ],
+      path: "Sources/swift",
       resources: [
-        .copy("Resources/index.leaf"),
-        .copy("Resources/css"),
-        .copy("Resources/fonts"),
-        .copy("Resources/img"),
-        .copy("Resources/img/icons"),
-        .copy("Resources/js"),
+        .copy("Resources/static"),
       ]),
     .testTarget(
       name: "iFilemanagerTests",
