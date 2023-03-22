@@ -26,11 +26,11 @@ public class FileServer {
 
     app.views.use(.leaf)
     app.leaf.cache.isEnabled = app.environment.isRelease
-    app.leaf.configuration.rootDirectory = Bundle.module.bundlePath.appending("/static")
+    app.leaf.configuration.rootDirectory = Bundle.iFilemanager.bundlePath.appending("/static")
     
     app.routes.defaultMaxBodySize = "60MB"
 
-    let file = FileMiddleware(publicDirectory: Bundle.module.bundlePath.appending("/static"))
+    let file = FileMiddleware(publicDirectory: Bundle.iFilemanager.bundlePath.appending("/static"))
     app.middleware.use(file)
 
     let encoder = JSONEncoder()
