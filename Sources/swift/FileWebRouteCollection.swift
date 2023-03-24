@@ -10,7 +10,6 @@ import ZIPFoundation
 
 struct FileWebRouteCollection: RouteCollection {
   let rootDocumentDirectory: URL
-  // let rootDocumentDirectory =
 
   // #available(iOS 15, *) URL.documentsDirectory
   init(
@@ -164,8 +163,8 @@ struct FileWebRouteCollection: RouteCollection {
     )
     .appendingPathComponent("export.zip", isDirectory: false)
 
-    // 检测文件是否存在
-    if try archiveUrl.checkResourceIsReachable() {
+    // 检测临时的压缩文件是否存在, 如果存在则删除
+    if fm.fileExists(atPath: archiveUrl.path) {
       try fm.removeItem(at: archiveUrl)
     }
 
@@ -200,7 +199,7 @@ struct FileWebRouteCollection: RouteCollection {
       }
     } else {
       try fm.zipItem(
-        at: rootDocumentDirectory.appendingPathComponent(path, isDirectory: true),
+        at: rootDocumentDirectory.appendingPathComponent(path),
         to: archiveUrl
       )
     }
