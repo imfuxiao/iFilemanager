@@ -103,16 +103,14 @@ struct FileWebRouteCollection: RouteCollection {
     let override: Bool = req.query["override"] ?? false
     let path = req.path
 
-    #if DEBUG
-      print("parameter path: \(path)")
-      print("parameter override: \(override)")
-    #endif
+    req.logger.debug("parameter path: \(path)")
+    req.logger.debug("parameter override: \(override)")
 
     // just create directory
     if path.hasSuffix("/") {
       let directoryURL = rootDocumentDirectory.appendingPathComponent(path, isDirectory: true)
       try FileManager.default.createDirectory(at: directoryURL, withIntermediateDirectories: true)
-      return .OK
+      return Response(status: .ok)
     }
 
     let fileURL = rootDocumentDirectory.appendingPathComponent(path, isDirectory: false)
@@ -122,20 +120,19 @@ struct FileWebRouteCollection: RouteCollection {
     }
 
     if FileManager.default.fileExists(atPath: fileURL.path) && !override {
-      #if DEBUG
-        print("\(fileURL.path) file exists")
-      #endif
-      return .OK
+      req.logger.debug("\(fileURL.path) file exists")
+      return Response(status: .ok)
     }
 
-    if let data = req.body.data {
-      req.fileio.writeFile(data, at: fileURL.path)
-        .whenFailure {
-          print("unresolve error: \($0.localizedDescription)")
-        }
+    guard let buffer = req.body.data else { return .init(status: .noContent) }
+    // https://docs.vapor.codes/advanced/files/
+    // https://theswiftdev.com/file-upload-api-server-in-vapor-4/
+    do {
+      try Data(buffer: buffer).write(to: fileURL)
+    } catch {
+      req.logger.error("upload error: \(error)")
     }
-
-    return .OK
+    return Response(status: .ok, headers: .init(), body: .empty)
   }
 
   // 文件下载
@@ -165,13 +162,11 @@ struct FileWebRouteCollection: RouteCollection {
     .appendingPathComponent("export.zip", isDirectory: false)
 
     // 检测文件是否存在
-    if try archiveUrl.checkResourceIsReachable() {
+    if fm.fileExists(atPath: archiveUrl.path) {
       try fm.removeItem(at: archiveUrl)
     }
 
-    #if DEBUG
-      print("download temp url \(archiveUrl)")
-    #endif
+    req.logger.debug("download temp url \(archiveUrl)")
 
     if let fileNames = fileNames {
       guard let archive = Archive(url: archiveUrl, accessMode: .create) else {
@@ -211,9 +206,7 @@ struct FileWebRouteCollection: RouteCollection {
   func deleteFileHandler(_ req: Request) throws -> Response {
     let path = req.path
 
-    #if DEBUG
-      print("delete path: \(path)")
-    #endif
+    req.logger.debug("delete path: \(path)")
 
     if path.isEmpty {
       throw Abort(.badRequest)

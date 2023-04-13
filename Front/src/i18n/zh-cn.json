@@ -152,7 +152,7 @@
     "show": "点击以显示",
     "size": "大小",
     "upload": "上传",
-    "uploadMessage": "选择上传选项。",
+    "uploadMessage": "选择上传选项。(也可在主页面拖拽上传)",
     "optionalPassword": "密码（选填，不填即无密码）"
   },
   "search": {

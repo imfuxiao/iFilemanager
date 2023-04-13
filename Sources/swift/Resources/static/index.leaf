@@ -57,4 +57,4 @@
         -webkit-transform: scale(1.0);
         transform: scale(1.0);
       }
-    }</style><script defer="defer" src="/js/chunk-vendors.b0dae4a7.js"></script><script defer="defer" src="/js/app.2cbf0ff6.js"></script><link href="/css/app.e80f01f1.css" rel="stylesheet"></head><body><noscript><strong>We're sorry but demo doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id="app"></div><div id="loading"><div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div></div></body></html>
+    }</style><script defer="defer" src="/js/chunk-vendors.70d4cdab.js"></script><script defer="defer" src="/js/app.883760c2.js"></script><link href="/css/app.e80f01f1.css" rel="stylesheet"></head><body><noscript><strong>We're sorry but demo doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id="app"></div><div id="loading"><div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div></div></body></html>

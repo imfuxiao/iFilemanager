@@ -12,9 +12,9 @@ public class FileServer {
     self.publicDirectory = publicDirectory
 
     #if DEBUG
-      app = Application(.development)
+    app = Application(.development)
     #else
-      app = Application(.production)
+    app = Application(.production)
     #endif
 
     configure(app)
@@ -26,11 +26,11 @@ public class FileServer {
 
     app.views.use(.leaf)
     app.leaf.cache.isEnabled = app.environment.isRelease
-    app.leaf.configuration.rootDirectory = Bundle.module.bundlePath.appending("/static")
-    
-    app.routes.defaultMaxBodySize = "60MB"
+    app.leaf.configuration.rootDirectory = Bundle.files.bundlePath.appending("/static")
 
-    let file = FileMiddleware(publicDirectory: Bundle.module.bundlePath.appending("/static"))
+    app.routes.defaultMaxBodySize = "50MB"
+
+    let file = FileMiddleware(publicDirectory: Bundle.files.bundlePath.appending("/static"))
     app.middleware.use(file)
 
     let encoder = JSONEncoder()
@@ -45,7 +45,7 @@ public class FileServer {
     Task(priority: .background) {
       do {
         try self.app.register(collection: FileWebRouteCollection(publicDirectory: self.publicDirectory))
-        try self.app.server.start()
+        try self.app.start()
         self.isRunning = true
       } catch {
         self.isRunning = false

@@ -101,7 +101,7 @@ export async function post(url, content = "", overwrite = false, onupload) {
     }
 
     request.onload = () => {
-      if (request.status === 200) {
+      if (request.status === 200 || request.status === 204) {
         resolve(request.responseText);
       } else if (request.status === 409) {
         reject(request.status);
