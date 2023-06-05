@@ -28,7 +28,7 @@ public class FileServer {
     app.leaf.cache.isEnabled = app.environment.isRelease
     app.leaf.configuration.rootDirectory = Bundle.files.bundlePath.appending("/static")
 
-    app.routes.defaultMaxBodySize = "50MB"
+    app.routes.defaultMaxBodySize = "150MB"
 
     let file = FileMiddleware(publicDirectory: Bundle.files.bundlePath.appending("/static"))
     app.middleware.use(file)
